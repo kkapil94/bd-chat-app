@@ -12,6 +12,30 @@ const msgTemp = document.querySelector("#msg-temp").innerHTML;
 const locTemp = document.querySelector("#loc-temp").innerHTML;
 const sideTemp = document.querySelector("#side-temp").innerHTML;
 
+//auto scroll
+const autoScroll = () => {
+  //new msg element
+  const newMsg = msgs.lastElementChild;
+
+  //height of the new msg
+  const newMsgStyles = getComputedStyle(newMsg);
+  const newMsgMargin = parseInt(newMsgStyles.marginBottom);
+  const newMsgHeight = newMsg.offsetHeight + newMsgMargin;
+
+  //visible height
+  const visibleHeight = msgs.offsetHeight;
+
+  //height of msgs container
+  const containerHeight = msgs.scrollHeight;
+
+  //how far have i scrolled
+  const scrollOffset = msgs.scrollTop + visibleHeight;
+
+  if (containerHeight - newMsgHeight <= scrollOffset) {
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+};
+
 //queries from url
 const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
@@ -30,6 +54,7 @@ socket.on("recieve:msg", (msg) => {
     username: msg.username,
   });
   msgs.insertAdjacentHTML("beforeend", html);
+  autoScroll();
 });
 
 //user goes offline
@@ -45,7 +70,7 @@ socket.on("receive:location", (msg) => {
     username: msg.username,
   });
   msgs.insertAdjacentHTML("beforeend", html);
-  console.log(location);
+  autoScroll();
 });
 
 //room join
