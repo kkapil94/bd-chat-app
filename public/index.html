@@ -6,18 +6,18 @@
     <title>chat app</title>
   </head>
   <body>
-    <h1>chat app</h1>
-    <form class="msgForm">
-      <input
-        class="msgInput"
-        type="text"
-        name="msg"
-        id=""
-        placeholder="Enter your message"
-      />
-      <button type="submit">send</button>
-    </form>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="./js/chat.js"></script>
+    <div>
+      <form action="/chat.html">
+        <div>
+          <label for="username">username</label>
+          <input type="text" name="username" id="username" />
+        </div>
+        <div>
+          <label for="room">room</label>
+          <input type="text" name="room" id="room" />
+        </div>
+        <button type="submit">Join</button>
+      </form>
+    </div>
   </body>
 </html>
